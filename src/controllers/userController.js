@@ -48,5 +48,33 @@ export const registerUser = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: "Internal server error" });
     }
-}
+};
 
+export const  loginUser = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        if(!email || !password) {
+            return res.status(400).json({ message: "Fill in all fields" });
+        }
+
+        const user = await prisma .users.findUnique({ where: { email } });
+        if(!user) {
+            return res.status(401).json({ message: "Candidate not found" });
+        }
+
+        const passwordMatch = await bcrypt.compare(password, user.password);
+        if(!passwordMatch) {
+            return res.status(401).json({ message: "Invalid Password" });
+        }
+
+        const token = jwt.sign({ id: user.externalId, email: user.email }, process.env.JWT_SECRET, { expiresIn: "1h" });
+        res.status(200).json({
+            message: "Candidate logged in successfully",
+            user: { name: user.name, email: user.email },
+            token
+        });
+    } catch (error) {
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
