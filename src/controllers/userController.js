@@ -1,3 +1,4 @@
+//IMPORTAÇÕES
 import prisma from '../prisma/prismaClient.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
@@ -6,6 +7,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+//LÓGICA DE REGISTRO DE USUÁRIOS
 export const registerUser = async (req, res) => {
     try {
         const { name, email, password, confirmPassword, cpf, cep, uf, logradouro } = req.body;
@@ -50,6 +52,7 @@ export const registerUser = async (req, res) => {
     }
 };
 
+//LÓGICA DE LOGIN DE USUÁRIOS
 export const  loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;

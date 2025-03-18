@@ -1,3 +1,4 @@
+//IMPORTAÇÕES
 import { Router } from 'express';
 import { registerUser, loginUser } from '../controllers/userController.js';
 
@@ -41,6 +42,8 @@ const router = Router();
  *       500:
  *         description: Erro interno do servidor
  */
+
+//ROTA DE REGISTRO DE USUÁRIOS
 router.post("/register", registerUser);
 
 /**
@@ -69,6 +72,8 @@ router.post("/register", registerUser);
  *       500:
  *         description: Erro interno do servidor
  */
+
+//ROTA DE LOGIN DE USUÁRIOS
 router.post("/login", loginUser);
 
 export default router;
