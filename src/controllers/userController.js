@@ -43,7 +43,7 @@ export const registerUser = async (req, res) => {
 
         const token = jwt.sign({ id: user.externalId, email: user.email }, process.env.JWT_SECRET, { expiresIn: "1h" }); 
         res.status(201).json({
-            message: "Candidate registered successfully",
+            message: "User registered successfully",
             user: { name: user.name, email: user.email},
             token
         });
@@ -63,7 +63,7 @@ export const  loginUser = async (req, res) => {
 
         const user = await prisma .users.findUnique({ where: { email } });
         if(!user) {
-            return res.status(401).json({ message: "Candidate not found" });
+            return res.status(401).json({ message: "User not found" });
         }
 
         const passwordMatch = await bcrypt.compare(password, user.password);
@@ -73,7 +73,7 @@ export const  loginUser = async (req, res) => {
 
         const token = jwt.sign({ id: user.externalId, email: user.email }, process.env.JWT_SECRET, { expiresIn: "1h" });
         res.status(200).json({
-            message: "Candidate logged in successfully",
+            message: "User logged in successfully",
             user: { name: user.name, email: user.email },
             token
         });
