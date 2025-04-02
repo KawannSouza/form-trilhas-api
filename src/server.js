@@ -5,7 +5,6 @@ import dotenv from 'dotenv';
 import setupSwagger from '../config/swaggerConfig.js';
 import candidateRoutes from './routes/candidateRoutes.js';
 
-
 const app = express();
 const PORT = process.env.PORT || 3000;
 
