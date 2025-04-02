@@ -1,6 +1,7 @@
 //IMPORTAÇÕES
 import { Router } from 'express';
-import { registerUser, loginUser } from '../controllers/userController.js';
+import { registerUser, loginUser, getUserData } from '../controllers/userController.js';
+import { authenticate } from '../middlewares/authMiddleware.js';
 
 const router = Router();
 
@@ -75,5 +76,7 @@ router.post("/register", registerUser);
 
 //ROTA DE LOGIN DE USUÁRIOS
 router.post("/login", loginUser);
+
+router.get("/:id/userdata", authenticate, getUserData);
 
 export default router;

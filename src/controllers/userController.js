@@ -53,7 +53,7 @@ export const registerUser = async (req, res) => {
 };
 
 //LÓGICA DE LOGIN DE USUÁRIOS
-export const  loginUser = async (req, res) => {
+export const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
 
@@ -71,13 +71,29 @@ export const  loginUser = async (req, res) => {
             return res.status(401).json({ message: "Invalid Password" });
         }
 
-        const token = jwt.sign({ id: user.externalId, email: user.email }, process.env.JWT_SECRET, { expiresIn: "1h" });
+        const token = jwt.sign({ id: user.id, externalId: user.externalId, email: user.email }, process.env.JWT_SECRET, { expiresIn: "1h" });
         res.status(200).json({
             message: "User logged in successfully",
-            user: { name: user.name, email: user.email },
+            user: { externalId: user.externalId, name: user.name, email: user.email },
             token
         });
     } catch (error) {
         res.status(500).json({ message: "Internal server error" });
     }
 };
+
+export const getUserData = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const user = await prisma.users.findFirst({
+            where: {
+                externalId: id
+            }
+        })
+        
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({ message: "Internal server error" });
+    }
+}
