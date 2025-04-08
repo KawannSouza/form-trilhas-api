@@ -103,10 +103,14 @@ export const updateUser = async (req, res) => {
     const { name, email, cpf, cep, uf, logradouro } = req.body;
 
     try {
+
+        const userFound = await prisma.users.findFirst({
+            where: { externalId: id }
+        });
         
         const user = await prisma.users.update({
             where: {
-                externalId: id
+                id: userFound.id
             },
             data: {
                 name,
@@ -126,6 +130,7 @@ export const updateUser = async (req, res) => {
             }
         });
     } catch (error) {
+        console.log(error)
         res.status(500).json({ message: "Internal server error" });
     }
 }
