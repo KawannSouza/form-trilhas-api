@@ -1,6 +1,6 @@
 //IMPORTAÇÕES
 import { Router } from 'express';
-import { registerUser, loginUser, getUserData } from '../controllers/userController.js';
+import { registerUser, loginUser, getUserData, updateUser } from '../controllers/userController.js';
 import { authenticate } from '../middlewares/authMiddleware.js';
 
 const router = Router();
@@ -78,5 +78,7 @@ router.post("/register", registerUser);
 router.post("/login", loginUser);
 
 router.get("/:id/userdata", authenticate, getUserData);
+
+router.get("/:id/update", authenticate, updateUser);
 
 export default router;
