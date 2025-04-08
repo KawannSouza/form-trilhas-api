@@ -79,6 +79,6 @@ router.post("/login", loginUser);
 
 router.get("/:id/userdata", authenticate, getUserData);
 
-router.get("/:id/update", authenticate, updateUser);
+router.put("/:id/update", authenticate, updateUser);
 
 export default router;
